@@ -9,6 +9,7 @@ const OpenCampaigns = () => {
        "Design",
        "Development",
        "Content Related",
+       "Bounty"
      ];
 
      const handleClick = (index) => {

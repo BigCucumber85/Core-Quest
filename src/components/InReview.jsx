@@ -9,6 +9,7 @@ const InReview = () => {
     "Design",
     "Development",
     "Content Related",
+    "Bounty"
   ];
 
   const handleClick = (index) => {

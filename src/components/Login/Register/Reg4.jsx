@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Loader";
 
 const Reg4 = () => {
-   const { registerData, setRegisterData, userMail, pass } =
+   const { registerData, setRegisterData, userMail, pass,setIsLogin } =
      React.useContext(Context);
    const notify = (e) => toast(e);
    const navigate = useNavigate();
@@ -153,6 +153,8 @@ const Reg4 = () => {
               notify(data1);
               console.log("response 1", response, "response2", response1);
               setSpinner(false);
+              setIsLogin(true);
+              
               navigate("/");
             }}
             className="flex flex-col w-[13rem] mx-auto mb-6  cursor-pointer hover:scale-105 hover:opacity-80 transition-all duration-200 gap-5 items-start justify-center"

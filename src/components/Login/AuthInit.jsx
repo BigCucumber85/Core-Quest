@@ -53,7 +53,7 @@ const AuthInit = () => {
               setUserMail(e.target.value);
             }}
             placeholder="Enter your email address"
-            className="relative outline-none w-full h-full text-black capitalize font-medium"
+            className="relative outline-none w-full h-full text-black  font-medium"
           />
         </div>
 
@@ -64,12 +64,14 @@ const AuthInit = () => {
               setPass(e.target.value);
             }}
             placeholder="Enter Password"
-            className="relative outline-none w-full h-full text-black capitalize font-medium"
+            type="password"
+            className="relative outline-none w-full h-full text-black  font-medium"
           />
         </div>
         <div
           onClick={async () => {
             setSpinner(true);
+            console.log(pass,userMail)
             if (userMail === "" || pass === "") {
               notify("Please fill all the fields");
             } else {

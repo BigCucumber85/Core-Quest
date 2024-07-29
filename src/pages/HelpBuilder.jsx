@@ -1,10 +1,13 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from "../components/Navbar";
 import HelpBuilderPostCard from '../components/HelpBuilderPostCard';
+import { Context } from "../context/ContextProvider";
+
 
 
 const HelpBuilder = () => {
-     const [activeButton, setActiveButton] = useState(0);
+  const [activeButton, setActiveButton] = useState(0);
+  const { setIsLogin, projectData } = React.useContext(Context);
 
      const buttons = [
        "All Projects",
@@ -12,12 +15,15 @@ const HelpBuilder = () => {
        "Gaming",
          "Social Media",
          "Meditech",
-       "GambleFi"
+       "Gamblefi"
      ];
 
      const handleClick = (index) => {
        setActiveButton(index);
-     };
+  };
+    useEffect(() => {
+      // console.log(projectData && projectData[buttons[activeButton]]);
+    }, [projectData, activeButton]);
   return (
     <div>
       <div>
@@ -52,7 +58,12 @@ const HelpBuilder = () => {
       <div className="w-[1330px] ml-[55px] top-[33px] relative box-border h-[0.125rem] border-t-[2px] border-solid border-orangered" />
 
       <div className="grid grid-cols-12 p-[55px] gap-x-[52px] gap-y-[30px] ">
-        <div className=" col-span-4">
+        {projectData && projectData[buttons[activeButton]].map((item, index) => (
+          <div key={index} className="col-span-4">
+            <HelpBuilderPostCard data={item} index={index} />
+          </div>
+        ))}
+        {/* <div className=" col-span-4">
           <HelpBuilderPostCard />
         </div>
         <div className=" col-span-4">
@@ -60,10 +71,7 @@ const HelpBuilder = () => {
         </div>
         <div className=" col-span-4">
           <HelpBuilderPostCard />
-        </div>
-        <div className=" col-span-4">
-          <HelpBuilderPostCard />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import React from "react";
+import { Context } from "../context/ContextProvider";
 
 const Navbar = () => {
+   const {  setIsLogin,isLogin } =
+     React.useContext(Context);
   return (
     <div className="flex justify-between bg-white  items-center p-1 px-[25px]  h-[62px]  pt-3.5 ">
       <div>
@@ -52,15 +55,14 @@ const Navbar = () => {
 
       {/* login/signup */}
       <div className="flex gap-4 pt-[16px]">
-        <div className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
-          Login
-        </div>
-        <div className="relative text-[1rem]  pb-[11px] capitalize font-inter  text-black text-left">
-          /
-        </div>
-        <div className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
-          Signup
-        </div>
+       {isLogin?<div className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
+          Logged In
+        </div> : <div onClick={() => {
+          setIsLogin(true);
+        }} className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
+          Login / Signup
+        </div>}
+        
       </div>
     </div>
   );
