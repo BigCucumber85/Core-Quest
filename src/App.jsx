@@ -27,7 +27,7 @@ function App() {
               <Route path="/" element={<Home /*state = {state}*/ />} />
               <Route
                 path="/postview"
-                element={<PostDetail /*state = {state}*/ />}
+                element={<PostDetail  /*state = {state}*/ />}
               />
               <Route
                 path="/bountypop"

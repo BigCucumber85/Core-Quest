@@ -6,22 +6,31 @@ import { useNavigate } from "react-router-dom";
 const Post_Home = ({ data, index }) => {
   const [value, setValue] = useState(null);
   const navigate = useNavigate()
-  const {  isLogin } =
-    React.useContext(Context);
+  const { isLogin, postDetail, setPostDetail } = React.useContext(Context);
 
   
     
   useEffect(() => {
+    // if (isLogin && data) {
+    //    console.log("inside post homecard ",data,index)
+    //    setValue( data[1])
+    //  }
     if (isLogin && data) {
-       console.log("inside post homecard ",data[1],index)
-       setValue( data[1])
-     }
-     else {
-       navigate("/")
-     }
+      const nestedData = Object.values(data)[0];
+      console.log("inside post homecard ", nestedData, index);
+      setValue(nestedData);
+    }
+    else {
+      navigate("/");
+    }
+  
    }, [data, isLogin, ]);
   return (
-    <div className="w-full gap-6 flex items-center justify-start relative box-border h-max overflow-hidden shrink-0 text-left text-[0.875rem] text-gray-100 font-inter border-[1px] border-solid border-[#ffbc8f] p-[9px]">
+    <div
+      onClick={() => {
+setPostDetail(value)
+        navigate("/postview");
+    }}  className="w-full gap-6 flex items-center justify-start relative box-border h-max overflow-hidden shrink-0 text-left text-[0.875rem] text-gray-100 font-inter border-[1px] border-solid border-[#ffbc8f] p-[9px]">
       <div className=" w-[109px] h-[106px]">
         <img
           className=" object-cover"

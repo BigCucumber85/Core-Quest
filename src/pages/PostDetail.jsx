@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import { Context } from "../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
+
 
 const PostDetail = () => {
+  const { isLogin, postDetail } = React.useContext(Context);
+  const navigate = useNavigate()
+  const [paragraphs, setParagraphs] = useState([]);
+
+  const [reward, setReward] = useState([])
+  useEffect(() => {
+    if (isLogin && postDetail) {
+      console.log("inside post detail ", postDetail);
+      setParagraphs(postDetail.submission_requirement.split(". "));
+      setReward(postDetail.price_list.split("\n"));
+      // setValue(data[1]);
+    } else {
+      navigate("/");
+    }
+  }, [postDetail, isLogin]);
   const prizes = [
     {
       place: "First Prize",
@@ -26,13 +44,15 @@ const PostDetail = () => {
               <div className="flex gap-4">
                 <img
                   className=" w-[101px] h-[98px] "
-                  src="https://i.imgur.com/oim9Tzo.png"
+                  src={
+                    postDetail?.post_url || "https://i.imgur.com/oim9Tzo.png"
+                  }
                   alt=""
                 />
                 <div className="flex flex-col gap-3">
                   <div className="w-max relative text-[1.25rem] capitalize font-semibold font-inter text-[#4d4d4d] text-left inline-block">{`A twitter thread `}</div>
                   <div className="w-max relative text-[1.125rem] capitalize font-medium font-inter text-[#8c8c8c] text-left inline-block">
-                    By - Core Connect
+                    By - {postDetail?.company_name}
                   </div>
                 </div>
               </div>
@@ -49,7 +69,7 @@ const PostDetail = () => {
                         alt=""
                       />
                       <div className="w-[3.25rem] relative text-[1.25rem] capitalize font-semibold font-inter text-black text-left inline-block">
-                        7000
+                        {postDetail?.total_price}
                       </div>
                     </div>
                   </div>
@@ -139,7 +159,7 @@ const PostDetail = () => {
                     />
                     <div className="flex flex-col">
                       <div className="w-[1.438rem] relative text-[1.25rem] capitalize font-medium font-inter text-black text-left inline-block">
-                        10
+                        {postDetail?.number_of_submissions}
                       </div>
                       <div className="w-[7.438rem] relative text-[1.25rem] capitalize font-inter text-[#717171] text-left inline-block">
                         submissions
@@ -174,8 +194,8 @@ const PostDetail = () => {
               DETAILS
             </div>
 
-            <div className="w-[73px] flex items-center justify-center relative rounded-[64px] bg-[#a8ff80] box-border h-[1.75rem] overflow-hidden text-left text-[1rem] text-black font-inter border-[0.5px] border-solid border-[#a8ff80]">
-              <div className=" capitalize">Design</div>
+            <div className="w-max px-2 flex items-center justify-center relative rounded-[64px] bg-[#a8ff80] box-border h-[1.75rem] overflow-hidden text-left text-[1rem] text-black font-inter border-[0.5px] border-solid border-[#a8ff80]">
+              <div className=" capitalize">{postDetail?.post_type}</div>
             </div>
           </div>
         </div>
@@ -188,23 +208,16 @@ const PostDetail = () => {
                 Requirements
               </div>
               <div className="w-[90%] pb-[22px] relative text-[1rem] capitalize font-medium font-inter text-[#373737] text-left inline-block">
-                Lorem ipsum dolor sit amet consectetur. Sem ipsum non imperdiet
-                orci convallis sodales nunc. Sagittis volutpat justo elit
-                libero. Id tellus risus ut euismod lorem elit. Morbi fames
-                mollis bibendum sit ultrices placerat donec quis.
+                {paragraphs?.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
 
               <div className="mt-7 text-xl font-semibold text-black max-md:max-w-full">
                 <h3>Prizes</h3>
                 <ul className="list-none p-0 mt-4">
-                  {prizes.map((prize, index) => (
-                    <li key={index} className="text-lg mt-2">
-                      {index === 0 && "🥇 "}
-                      {index === 1 && "🥈 "}
-                      {index === 2 && "🥉 "}
-                      <span className="font-bold">{prize.place}:</span>{" "}
-                      {prize.amount}
-                    </li>
+                  {reward?.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
                   ))}
                 </ul>
               </div>
@@ -215,12 +228,16 @@ const PostDetail = () => {
             <div className="flex flex-col gap-2 items-center justify-center">
               <div className="w-full relative rounded-xl p-6 bg-white box-border h-max overflow-hidden text-left text-[1rem] text-[#666] font-inter border-[1px] border-solid border-orangered">
                 <div className="capitalize pb-4 font-medium">ELIGIBILITY</div>
-                <div className=" text-[0.875rem] capitalize font-medium inline-block ">{`Lorem ipsum dolor sit amet consectetur. Sem ipsum non imperdiet orci convallis sodales nunc. Sagittis volutpat justo elit libero. `}</div>
+                <div className=" text-[0.875rem] capitalize font-medium inline-block ">{ postDetail?.judging_criteria}</div>
               </div>
 
               <div className="w-full relative rounded-xl p-6 bg-white box-border h-max overflow-hidden text-left text-[1rem] text-[#666] font-inter border-[1px] border-solid border-orangered">
                 <div className="capitalize pb-4 font-medium">Contact</div>
-                <div className=" text-[0.875rem] capitalize font-medium inline-block ">{`Lorem ipsum dolor sit amet consectetur. Sem ipsum non imperdiet orci convallis sodales nunc. Sagittis volutpat justo elit libero. `}</div>
+                <div className=" text-[0.875rem] capitalize font-medium inline-block ">
+                  Email: {postDetail?.contact_details.email} <br />
+                  Phone: {postDetail?.contact_details.phone}
+                  
+                </div>
                 <div className="flex pt-2 gap-2 justify-start items-center">
                   <div className="w-[5rem] relative text-[1rem] capitalize font-medium font-inter text-[#666] text-left inline-block">
                     Reach out

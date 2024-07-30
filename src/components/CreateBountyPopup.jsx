@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function BountyForm() {
+function BountyForm({set}) {
   const [formData, setFormData] = useState({
     headline: "",
     deadline: new Date(),
@@ -42,7 +42,13 @@ function BountyForm() {
   };
 
   return (
-    <div className="flex flex-col py-8 bg-white rounded-xl border border-solid border-orange-500 border-opacity-50 max-w-[531px]">
+    <div className="flex flex-col h-[90vh] overflow-y-scroll py-8 bg-white rounded-xl border border-solid border-orange-500 border-opacity-50 max-w-[531px]">
+      <div
+        onClick={() => {
+          set(false)
+      }}  className=" p-3 h-1 w-2 text-[30px]  cursor-pointer hover:scale-105 hover:opacity-80 transition-all duration-200">
+        x
+      </div>
       <div className="self-center text-xl font-semibold text-black">
         Add Details
       </div>
@@ -173,6 +179,17 @@ function BountyForm() {
         />
 
         <button
+          onClick={() => {
+            if (
+              formData.headline !== "" &&
+              formData.details !== "" &&
+              formData.totalPrize !== "" &&
+              formData.eligibility !== "" &&
+              formData.contact !== ""
+            ) {
+              handleSubmit();
+            }
+          }}
           type="submit"
           className="px-16 capitalize py-5 mt-9 text-xl font-medium text-white whitespace-nowrap bg-orange-500 rounded-md border border-solid border-orange-500 border-opacity-50 max-md:px-5 max-md:max-w-full"
         >

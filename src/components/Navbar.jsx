@@ -1,12 +1,18 @@
 import React from "react";
 import { Context } from "../context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-   const {  setIsLogin,isLogin } =
-     React.useContext(Context);
+   const {  setIsLogin,isLogin,user } =
+    React.useContext(Context);
+  const navigate = useNavigate();
   return (
     <div className="flex justify-between bg-white  items-center p-1 px-[25px]  h-[62px]  pt-3.5 ">
-      <div>
+      <div
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         <img
           src="https://i.imgur.com/KjP0iHX.png"
           className="w-[140px] relative text-[1.75rem] pt-3.5 pb-[17px] font-array text-orangered text-left inline-block"
@@ -14,7 +20,12 @@ const Navbar = () => {
       </div>
       {/* menu */}
       <div className="flex overflow-hidden items-center justify-evenly gap-12 pt-[16px] ">
-        <div className="relative cursor-pointer  w-[85px] overflow-hidden flex flex-col group items-center justify-center ">
+        <div
+          onClick={() => {
+            navigate("/");
+          }}
+          className="relative cursor-pointer  w-[85px] overflow-hidden flex flex-col group items-center justify-center "
+        >
           <div className="relative text-[1rem] pb-[11px] capitalize font-inter text-black text-left">
             Bounties
           </div>
@@ -22,7 +33,12 @@ const Navbar = () => {
           <div className="flex items-center justify-center relative group-hover:h-[3px] h-0 w-0 transition-all duration-200 ease-linear group-hover:w-[100px] group-hover:min-w-20 bg-orangered"></div>
         </div>
 
-        <div className="relative cursor-pointer  w-[80px] overflow-hidden flex flex-col group items-center justify-center ">
+        <div
+          onClick={() => {
+            navigate("/builder");
+          }}
+          className="relative cursor-pointer  w-[80px] overflow-hidden flex flex-col group items-center justify-center "
+        >
           <div className="relative text-[1rem] pb-[11px] capitalize font-inter text-black text-left">
             Projects
           </div>
@@ -55,14 +71,20 @@ const Navbar = () => {
 
       {/* login/signup */}
       <div className="flex gap-4 pt-[16px]">
-       {isLogin?<div className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
-          Logged In
-        </div> : <div onClick={() => {
-          setIsLogin(true);
-        }} className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
-          Login / Signup
-        </div>}
-        
+        {isLogin ? (
+          <div className="relative flex text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left">
+            {user?.name} <img src={user?.img_url} alt="" />
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              setIsLogin(true);
+            }}
+            className="relative text-[1rem]  pb-[11px] capitalize font-inter cursor-pointer hover:text-blue-600 text-black text-left"
+          >
+            Login / Signup
+          </div>
+        )}
       </div>
     </div>
   );

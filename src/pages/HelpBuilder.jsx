@@ -2,12 +2,14 @@ import React,{useState,useEffect} from 'react'
 import Navbar from "../components/Navbar";
 import HelpBuilderPostCard from '../components/HelpBuilderPostCard';
 import { Context } from "../context/ContextProvider";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const HelpBuilder = () => {
   const [activeButton, setActiveButton] = useState(0);
-  const { setIsLogin, projectData } = React.useContext(Context);
+  const { setIsLogin, projectData ,isLogin} = React.useContext(Context);
+  const navigate = useNavigate();
 
      const buttons = [
        "All Projects",
@@ -21,7 +23,13 @@ const HelpBuilder = () => {
      const handleClick = (index) => {
        setActiveButton(index);
   };
-    useEffect(() => {
+  useEffect(() => {
+    if (isLogin) {
+        console.log("")
+    }
+    else {
+      navigate("/")
+    }
       // console.log(projectData && projectData[buttons[activeButton]]);
     }, [projectData, activeButton]);
   return (

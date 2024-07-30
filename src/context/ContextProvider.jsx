@@ -13,7 +13,8 @@ export const CoreProvider = ({ children }) => {
   const [openData, setOpenData] = useState([]);
   const [ongoingData, setOngoingData] = useState([]);
   const [closeData, setCloseData] = useState([]);
-  
+  const [postDetail, setPostDetail] = useState(null);
+
   const [postTypeData, setPostTypeData] = useState(null);
   const [projectData, setProjectData] = useState(null);
   const [loginModal, setloginModal] = useState(true);
@@ -43,7 +44,7 @@ export const CoreProvider = ({ children }) => {
     profile_type: "",
   });
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
     //  e.preventDefault();
     try {
       console.log("haalo");
@@ -96,16 +97,16 @@ export const CoreProvider = ({ children }) => {
               method: "POST", // or 'POST' if required
             }
           );
-        //  const response3 = await fetch(
-        //    "https://corequest.onrender.com/profiledata",
-        //    {
-        //      method: "POST",
-        //      headers: {
-        //        "Content-Type": "application/json",
-        //      },
-        //      body: JSON.stringify({key: "sage" }),
-        //    }
-        //  );
+          //  const response3 = await fetch(
+          //    "https://corequest.onrender.com/profiledata",
+          //    {
+          //      method: "POST",
+          //      headers: {
+          //        "Content-Type": "application/json",
+          //      },
+          //      body: JSON.stringify({key: "sage" }),
+          //    }
+          //  );
           if (!response.ok) {
             console.log("Network response was not ok");
           }
@@ -125,13 +126,13 @@ export const CoreProvider = ({ children }) => {
             }
           );
 
-          console.log("Profile Data:",response4.data[1]);
+          console.log("Profile Data:", response4.data[userMail]);
           setOpenData(data.open);
           setOngoingData(data.ongoing);
           setCloseData(data.close);
-          setProjectData(data2)
-          setPostTypeData(data1)
-          setUser(response4.data[1]);
+          setProjectData(data2);
+          setPostTypeData(data1);
+          setUser(response4.data[userMail]);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -155,6 +156,8 @@ export const CoreProvider = ({ children }) => {
         openData,
         projectData,
         postTypeData,
+        postDetail,
+        setPostDetail,
         setProjectData,
         setPostTypeData,
         setOngoingData,
